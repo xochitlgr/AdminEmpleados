@@ -38,17 +38,17 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-- [ ] T003 Crear entidad `Employee` (Dart puro, sin imports Flutter) con enums `Area` (tecnologia, recursosHumanos, finanzas, operaciones, ventas, administracion) y `Genero` (masculino, femenino, otro) y campos `id: int`, `nombreCompleto: String`, `area: Area`, `puesto: String`, `genero: Genero`, `fechaEntrada: DateTime`, `fechaNacimiento: DateTime?`, `isActive: bool` en `lib/features/employees/domain/entities/employee.dart`
-- [ ] T004 Crear puerto abstracto `EmployeeRepository` con `Future<List<Employee>> getEmployees()`, `Future<Employee> registerEmployee(Employee employee)`, `Future<Employee> toggleEmployeeStatus(int id)` en `lib/features/employees/domain/repositories/employee_repository.dart`
-- [ ] T005 [P] Crear use case `GetEmployees` (delega en el repositorio) en `lib/features/employees/domain/usecases/get_employees.dart`
-- [ ] T006 [P] Crear use case `RegisterEmployee` (delega en `registerEmployee`) en `lib/features/employees/domain/usecases/register_employee.dart`
-- [ ] T007 [P] Crear use case `ToggleEmployeeStatus` (delega en `toggleEmployeeStatus` por `id`) en `lib/features/employees/domain/usecases/toggle_employee_status.dart`
-- [ ] T008 [P] Crear `MockEmployeeDataSource` con lista en memoria precargada de 5 empleados (cobertura de áreas/géneros, al menos 1 inactivo), `id: int` autoincremental, métodos get/register/toggle en `lib/features/employees/data/datasources/mock_employee_data_source.dart`
-- [ ] T009 [P] Crear `EmployeeModel extends Employee` con `copyWith` y `==`/`hashCode` por valor en `lib/features/employees/data/models/employee_model.dart`
-- [ ] T010 Crear `EmployeeRepositoryImpl` implementando el puerto, mapeando `EmployeeModel` ↔ `Employee` (el domain nunca ve el modelo) y lanzando `StateError('Employee not found: <id>')` si se toggle un `id` inexistente en `lib/features/employees/data/repositories/employee_repository_impl.dart`
-- [ ] T011 Registrar en `get_it` (registro manual, sin código generado): `MockEmployeeDataSource` (LazySingleton), `EmployeeRepository`/`EmployeeRepositoryImpl` (Singleton), los 3 use cases (LazySingleton) y preparar el patrón `getIt.registerFactory` para los cubits de presentación en `lib/app/di/injector.dart` (`EmployeeFormCubit` y `EmployeeListCubit` se registran como Factory en T015 y T019, cuando existan sus archivos)
-- [ ] T012 [P] Escribir tests del data source (seed de 5, register asigna `id` y `isActive = true`, toggle invierte estado, error ante id inexistente) en `test/features/employees/data/mock_employee_data_source_test.dart`
-- [ ] T013 [P] Escribir tests del repositorio (getEmployees devuelve 5, register persiste y devuelve el empleado, toggle persiste en el mock, propaga errores) en `test/features/employees/data/employee_repository_impl_test.dart`
+- [X] T003 Crear entidad `Employee` (Dart puro, sin imports Flutter) con enums `Area` (tecnologia, recursosHumanos, finanzas, operaciones, ventas, administracion) y `Genero` (masculino, femenino, otro) y campos `id: int`, `nombreCompleto: String`, `area: Area`, `puesto: String`, `genero: Genero`, `fechaEntrada: DateTime`, `fechaNacimiento: DateTime?`, `isActive: bool` en `lib/features/employees/domain/entities/employee.dart`
+- [X] T004 Crear puerto abstracto `EmployeeRepository` con `Future<List<Employee>> getEmployees()`, `Future<Employee> registerEmployee(Employee employee)`, `Future<Employee> toggleEmployeeStatus(int id)` en `lib/features/employees/domain/repositories/employee_repository.dart`
+- [X] T005 [P] Crear use case `GetEmployees` (delega en el repositorio) en `lib/features/employees/domain/usecases/get_employees.dart`
+- [X] T006 [P] Crear use case `RegisterEmployee` (delega en `registerEmployee`) en `lib/features/employees/domain/usecases/register_employee.dart`
+- [X] T007 [P] Crear use case `ToggleEmployeeStatus` (delega en `toggleEmployeeStatus` por `id`) en `lib/features/employees/domain/usecases/toggle_employee_status.dart`
+- [X] T008 [P] Crear `MockEmployeeDataSource` con lista en memoria precargada de 5 empleados (cobertura de áreas/géneros, al menos 1 inactivo), `id: int` autoincremental, métodos get/register/toggle en `lib/features/employees/data/datasources/mock_employee_data_source.dart`
+- [X] T009 [P] Crear `EmployeeModel extends Employee` con `copyWith` y `==`/`hashCode` por valor en `lib/features/employees/data/models/employee_model.dart`
+- [X] T010 Crear `EmployeeRepositoryImpl` implementando el puerto, mapeando `EmployeeModel` ↔ `Employee` (el domain nunca ve el modelo) y lanzando `StateError('Employee not found: <id>')` si se toggle un `id` inexistente en `lib/features/employees/data/repositories/employee_repository_impl.dart`
+- [X] T011 Registrar en `get_it` (registro manual, sin código generado): `MockEmployeeDataSource` (LazySingleton), `EmployeeRepository`/`EmployeeRepositoryImpl` (Singleton), los 3 use cases (LazySingleton) y preparar el patrón `getIt.registerFactory` para los cubits de presentación en `lib/app/di/injector.dart` (`EmployeeFormCubit` y `EmployeeListCubit` se registran como Factory en T015 y T019, cuando existan sus archivos)
+- [X] T012 [P] Escribir tests del data source (seed de 5, register asigna `id` y `isActive = true`, toggle invierte estado, error ante id inexistente) en `test/features/employees/data/mock_employee_data_source_test.dart`
+- [X] T013 [P] Escribir tests del repositorio (getEmployees devuelve 5, register persiste y devuelve el empleado, toggle persiste en el mock, propaga errores) en `test/features/employees/data/employee_repository_impl_test.dart`
 
 **Checkpoint**: Foundation ready - user story implementation can now begin. `flutter analyze` sin issues y `flutter test` del data layer en verde.
 
@@ -197,3 +197,4 @@ Con varios desarrolladores:
 - Constitución VIII: un commit por fase (`feat: domain`, `feat: data layer`, `feat: UI`, ...); cada fase deja la app compilable y `flutter analyze` sin issues + tests del data layer en verde
 - Evitar: tareas vagas, conflictos de mismo archivo, dependencias cruzadas que rompan la independencia de stories
 - US3 toca `EmployeeListPage` (compartido con US2): ejecutar en orden (US2 antes de US3)
+
