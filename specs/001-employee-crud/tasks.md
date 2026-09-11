@@ -107,7 +107,7 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 **Purpose**: Validación final de extremo a extremo y calidad (Constitución VII/VIII).
 
-- [ ] T024 Ejecutar la validación de `quickstart.md` (S1–S6: registro válido, campos requeridos, fecha no editable, toggle y seed) y confirmar `flutter analyze` sin issues + `flutter test` en verde
+- [X] T024 Ejecutar la validación de `quickstart.md` (S1–S6: registro válido, campos requeridos, fecha no editable, toggle y seed) y confirmar `flutter analyze` sin issues + `flutter test` en verde
 
 ---
 
@@ -197,6 +197,7 @@ Con varios desarrolladores:
 - Constitución VIII: un commit por fase (`feat: domain`, `feat: data layer`, `feat: UI`, ...); cada fase deja la app compilable y `flutter analyze` sin issues + tests del data layer en verde
 - Evitar: tareas vagas, conflictos de mismo archivo, dependencias cruzadas que rompan la independencia de stories
 - US3 toca `EmployeeListPage` (compartido con US2): ejecutar en orden (US2 antes de US3)
+
 
 
 
