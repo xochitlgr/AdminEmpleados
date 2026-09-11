@@ -79,10 +79,10 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 ### Implementation for User Story 2
 
-- [ ] T018 [P] [US2] Crear `EmployeeListState` con `equatable` (initial, loading, loaded con lista, error con mensaje) en `lib/features/employees/presentation/cubits/employee_list/employee_list_state.dart`
-- [ ] T019 [P] [US2] Crear `EmployeeListCubit` con `load()` (usa `GetEmployees`) y `toggle(int id)` (usa `ToggleEmployeeStatus` y refresca la lista) en `lib/features/employees/presentation/cubits/employee_list/employee_list_cubit.dart` y registrarlo como `Factory` en `lib/app/di/injector.dart`
-- [ ] T020 [P] [US2] Crear `EmployeeCard` con nombre completo, puesto, área (etiqueta en español), género, fecha de entrada (`dd/MM/yyyy` con intl), Switch cuyo `value` usa `employee.isActive` (estado guardado; onChanged → `onToggle`) y chip de estado; la fila inactiva se distingue visualmente (fondo grisáceo, opacidad reducida) en `lib/features/employees/presentation/widgets/employee_card.dart`
-- [ ] T021 [US2] Crear `EmployeeListPage` con `BlocBuilder` sobre `EmployeeListCubit`, estados (loading/loaded/error) y AppBar "Empleados" en `lib/features/employees/presentation/pages/employee_list_page.dart`, y completar en `lib/app/routes.dart` el builder de la ruta base `/` → `EmployeeListPage` (definida en T016)
+- [X] T018 [P] [US2] Crear `EmployeeListState` con `equatable` (initial, loading, loaded con lista, error con mensaje) en `lib/features/employees/presentation/cubits/employee_list/employee_list_state.dart`
+- [X] T019 [P] [US2] Crear `EmployeeListCubit` con `load()` (usa `GetEmployees`) y `toggle(int id)` (usa `ToggleEmployeeStatus` y refresca la lista) en `lib/features/employees/presentation/cubits/employee_list/employee_list_cubit.dart` y registrarlo como `Factory` en `lib/app/di/injector.dart`
+- [X] T020 [P] [US2] Crear `EmployeeCard` con nombre completo, puesto, área (etiqueta en español), género, fecha de entrada (`dd/MM/yyyy` con intl), Switch cuyo `value` usa `employee.isActive` (estado guardado; onChanged → `onToggle`) y chip de estado; la fila inactiva se distingue visualmente (fondo grisáceo, opacidad reducida) en `lib/features/employees/presentation/widgets/employee_card.dart`
+- [X] T021 [US2] Crear `EmployeeListPage` con `BlocBuilder` sobre `EmployeeListCubit`, estados (loading/loaded/error) y AppBar "Empleados" en `lib/features/employees/presentation/pages/employee_list_page.dart`, y completar en `lib/app/routes.dart` el builder de la ruta base `/` → `EmployeeListPage` (definida en T016)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently.
 
@@ -197,5 +197,6 @@ Con varios desarrolladores:
 - Constitución VIII: un commit por fase (`feat: domain`, `feat: data layer`, `feat: UI`, ...); cada fase deja la app compilable y `flutter analyze` sin issues + tests del data layer en verde
 - Evitar: tareas vagas, conflictos de mismo archivo, dependencias cruzadas que rompan la independencia de stories
 - US3 toca `EmployeeListPage` (compartido con US2): ejecutar en orden (US2 antes de US3)
+
 
 

@@ -7,6 +7,7 @@ import '../../features/employees/domain/usecases/get_employees.dart';
 import '../../features/employees/domain/usecases/register_employee.dart';
 import '../../features/employees/domain/usecases/toggle_employee_status.dart';
 import '../../features/employees/presentation/cubits/employee_form/employee_form_cubit.dart';
+import '../../features/employees/presentation/cubits/employee_list/employee_list_cubit.dart';
 
 /// Contenedor de dependencias (get_it manual, sin código generado).
 final GetIt getIt = GetIt.instance;
@@ -34,5 +35,11 @@ void setupLocator() {
   // Cubits de presentación (Factory).
   getIt.registerFactory<EmployeeFormCubit>(
     () => EmployeeFormCubit(getIt<RegisterEmployee>()),
+  );
+  getIt.registerFactory<EmployeeListCubit>(
+    () => EmployeeListCubit(
+      getIt<GetEmployees>(),
+      getIt<ToggleEmployeeStatus>(),
+    ),
   );
 }

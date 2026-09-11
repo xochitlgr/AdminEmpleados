@@ -1,6 +1,7 @@
 import 'package:flutter/widgets.dart';
 
 import '../features/employees/presentation/pages/employee_form_page.dart';
+import '../features/employees/presentation/pages/employee_list_page.dart';
 import '../features/employees/presentation/pages/employee_success_page.dart';
 
 /// Nombres de las rutas nombradas de la aplicación.
@@ -13,9 +14,8 @@ class AppRoutes {
 }
 
 /// Construye el mapa de rutas.
-///
-/// La ruta raíz `/` se completa al existir `EmployeeListPage`.
 Map<String, WidgetBuilder> buildAppRoutes() => {
+      AppRoutes.root: (_) => const EmployeeListPage(),
       AppRoutes.form: (_) => const EmployeeFormPage(),
       AppRoutes.success: (_) => const EmployeeSuccessPage(),
     };
