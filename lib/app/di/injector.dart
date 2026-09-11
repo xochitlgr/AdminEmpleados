@@ -6,6 +6,7 @@ import '../../features/employees/domain/repositories/employee_repository.dart';
 import '../../features/employees/domain/usecases/get_employees.dart';
 import '../../features/employees/domain/usecases/register_employee.dart';
 import '../../features/employees/domain/usecases/toggle_employee_status.dart';
+import '../../features/employees/presentation/cubits/employee_form/employee_form_cubit.dart';
 
 /// Contenedor de dependencias (get_it manual, sin código generado).
 final GetIt getIt = GetIt.instance;
@@ -30,6 +31,8 @@ void setupLocator() {
       () => ToggleEmployeeStatus(getIt<EmployeeRepository>()),
     );
 
-  // Los cubits de presentación se registran como Factory en sus fases
-  // (EmployeeFormCubit y EmployeeListCubit).
+  // Cubits de presentación (Factory).
+  getIt.registerFactory<EmployeeFormCubit>(
+    () => EmployeeFormCubit(getIt<RegisterEmployee>()),
+  );
 }

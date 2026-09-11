@@ -62,10 +62,10 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 ### Implementation for User Story 1
 
-- [ ] T014 [P] [US1] Crear `EmployeeFormState` con `equatable` (initial, submitting, success, error con mensaje) en `lib/features/employees/presentation/cubits/employee_form/employee_form_state.dart`
-- [ ] T015 [P] [US1] Crear `EmployeeFormCubit` con `submit(Employee employee)` (usa `RegisterEmployee`, expone estados) en `lib/features/employees/presentation/cubits/employee_form/employee_form_cubit.dart` y registrarlo como `Factory` en `lib/app/di/injector.dart`
-- [ ] T016 [US1] Crear `EmployeeFormPage` con `Form` + `GlobalKey<FormState>` y validaciones (reglas verbatim de data-model: nombreCompleto "Requerido, no vacío tras trim; error `Ingresa el nombre completo`"; area "Debe seleccionarse un área válida de la lista cerrada"; fechaEntrada "Obligatoria, elegida con DatePicker; no editable manualmente"; puesto "Requerido, no vacío tras trim"; genero "Debe seleccionarse uno de los 3 valores"; fechaNacimiento opcional). Fechas como campos solo-lectura que abren `showDatePicker`; dropdowns `DropdownButtonFormField<Area>` / `<Genero>`; botón "Registrar" que valida y navega a `/success` en `lib/features/employees/presentation/pages/employee_form_page.dart`; además, crear `lib/app/routes.dart` con las rutas base nombradas `/`, `/form` y `/success` (constantes de ruta + builders para `/form` → `EmployeeFormPage` y `/success` → `EmployeeSuccessPage`; el builder de `/` se completa en T021 al existir `EmployeeListPage`)
-- [ ] T017 [P] [US1] Crear `EmployeeSuccessPage` con mensaje "Empleado registrado correctamente" y botón "Regresar a empleados" en `lib/features/employees/presentation/pages/employee_success_page.dart`
+- [X] T014 [P] [US1] Crear `EmployeeFormState` con `equatable` (initial, submitting, success, error con mensaje) en `lib/features/employees/presentation/cubits/employee_form/employee_form_state.dart`
+- [X] T015 [P] [US1] Crear `EmployeeFormCubit` con `submit(Employee employee)` (usa `RegisterEmployee`, expone estados) en `lib/features/employees/presentation/cubits/employee_form/employee_form_cubit.dart` y registrarlo como `Factory` en `lib/app/di/injector.dart`
+- [X] T016 [US1] Crear `EmployeeFormPage` con `Form` + `GlobalKey<FormState>` y validaciones (reglas verbatim de data-model: nombreCompleto "Requerido, no vacío tras trim; error `Ingresa el nombre completo`"; area "Debe seleccionarse un área válida de la lista cerrada"; fechaEntrada "Obligatoria, elegida con DatePicker; no editable manualmente"; puesto "Requerido, no vacío tras trim"; genero "Debe seleccionarse uno de los 3 valores"; fechaNacimiento opcional). Fechas como campos solo-lectura que abren `showDatePicker`; dropdowns `DropdownButtonFormField<Area>` / `<Genero>`; botón "Registrar" que valida y navega a `/success` en `lib/features/employees/presentation/pages/employee_form_page.dart`; además, crear `lib/app/routes.dart` con las rutas base nombradas `/`, `/form` y `/success` (constantes de ruta + builders para `/form` → `EmployeeFormPage` y `/success` → `EmployeeSuccessPage`; el builder de `/` se completa en T021 al existir `EmployeeListPage`)
+- [X] T017 [P] [US1] Crear `EmployeeSuccessPage` con mensaje "Empleado registrado correctamente" y botón "Regresar a empleados" en `lib/features/employees/presentation/pages/employee_success_page.dart`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently.
 
@@ -197,4 +197,5 @@ Con varios desarrolladores:
 - Constitución VIII: un commit por fase (`feat: domain`, `feat: data layer`, `feat: UI`, ...); cada fase deja la app compilable y `flutter analyze` sin issues + tests del data layer en verde
 - Evitar: tareas vagas, conflictos de mismo archivo, dependencias cruzadas que rompan la independencia de stories
 - US3 toca `EmployeeListPage` (compartido con US2): ejecutar en orden (US2 antes de US3)
+
 
