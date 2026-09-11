@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../../../app/di/injector.dart';
+import '../cubits/employee_list/employee_list_cubit.dart';
+
 /// Pantalla de registro exitoso (US1, FR-008).
 class EmployeeSuccessPage extends StatelessWidget {
   const EmployeeSuccessPage({super.key});
@@ -23,6 +26,7 @@ class EmployeeSuccessPage extends StatelessWidget {
               const SizedBox(height: 24),
               FilledButton(
                 onPressed: () {
+                  getIt<EmployeeListCubit>().load();
                   Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: const Text('Regresar a empleados'),

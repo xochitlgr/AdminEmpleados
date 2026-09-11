@@ -13,8 +13,8 @@ class EmployeeListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => getIt<EmployeeListCubit>(),
+    return BlocProvider.value(
+      value: getIt<EmployeeListCubit>(),
       child: const _ListBody(),
     );
   }

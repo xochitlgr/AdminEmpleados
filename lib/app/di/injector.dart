@@ -32,11 +32,13 @@ void setupLocator() {
       () => ToggleEmployeeStatus(getIt<EmployeeRepository>()),
     );
 
-  // Cubits de presentación (Factory).
+  // Cubits de presentación.
   getIt.registerFactory<EmployeeFormCubit>(
     () => EmployeeFormCubit(getIt<RegisterEmployee>()),
   );
-  getIt.registerFactory<EmployeeListCubit>(
+  // LazySingleton: la lista la crea el BlocProvider de EmployeeListPage y
+  // SuccessPage necesita acceder a la misma instancia para recargar.
+  getIt.registerLazySingleton<EmployeeListCubit>(
     () => EmployeeListCubit(
       getIt<GetEmployees>(),
       getIt<ToggleEmployeeStatus>(),
