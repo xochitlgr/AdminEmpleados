@@ -3,6 +3,7 @@
 *.log
 *.pyc
 *.swp
+flutter_run_log*.txt
 .DS_Store
 .atom/
 .build/

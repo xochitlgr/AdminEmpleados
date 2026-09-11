@@ -202,3 +202,12 @@ Con varios desarrolladores:
 
 
 
+
+
+## Phase 7: Convergence
+
+**Purpose**: Cierre de gaps detectados por `/speckit.converge` (FR-001/SC-005 y contrato UI de `EmployeeCard`).
+
+- [X] T025 [US2] Completar `EmployeeCard` mostrando los 6 atributos de FR-001: agregar línea de datos con `genero` (etiqueta en español) y `fechaEntrada` en formato `dd/MM/yyyy` con `intl` en `lib/features/employees/presentation/widgets/employee_card.dart` per FR-001/SC-005/contracts/ui.md (partial)
+- [X] T026 [US2] Reemplazar el `Text` de estado por un `Chip` ("Activo"/"Inactivo") en `EmployeeCard`, conservando el fondo grisáceo y la opacidad reducida para inactivos, en `lib/features/employees/presentation/widgets/employee_card.dart` per contracts/ui.md/T020 (partial)
+
