@@ -1,50 +1,75 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+# AdminEmpleados Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Clean Architecture Estricta
+Separación total entre presentación, dominio y datos. Las dependencias apuntan
+siempre hacia el interior: `presentation` → `domain` ← `data`. El dominio nunca
+depende de la presentación ni de los datos; los repositorios se declaran como
+puertos en `domain` y se implementan en `data`.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. State Management con Cubit (flutter_bloc)
+Único patrón de gestión de estado permitido: Cubit de `flutter_bloc`. Prohibido
+Provider, Riverpod, GetX o `setState` para estado de negocio. El estado se
+expone con `BlocProvider` y se escucha con `BlocBuilder`.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Datos Mock Locales en Memoria
+Todos los repositorios usan datos mock en memoria (listas/mapas locales).
+Prohibido consumir APIs HTTP o usar una base de datos real (SQLite, Hive, Isar,
+servicios en la nube) para la persistencia de esta aplicación.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Dominio en Dart Puro (sin Flutter)
+La capa `domain` NO importa Flutter ni ningún paquete que dependa de él (sin
+`dart:ui`, `package:flutter/*`). Solo Dart puro: entidades, casos de uso,
+puertos y validadores.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Validación de Formularios Obligatoria
+Todo campo requerido debe validarse (Form + validators). Ningún input se
+persiste sin pasar su validación.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### VI. UX Consistente (Material 3, Español, DatePicker)
+Interfaz con Material 3 (`ThemeData(useMaterial3: true)`). Las fechas se capturan
+siempre con DatePicker (`showDatePicker`), nunca como texto libre. Todas las
+etiquetas y mensajes en español.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### VII. Calidad
+`flutter analyze` sin issues antes de cerrar cada fase. Tests unitarios del data
+layer obligatorios y en verde; se valoran también los del dominio y casos de uso.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### VIII. Producto Terminado por Fases
+Trabajo por fases, un commit por fase. Cada fase deja la app compilable y
+funcional. Objetivo: producto terminado y usable, no un ejercicio académico.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Arquitectura de Carpetas
+
+La raíz de `lib/` se organiza por features (Clean Architecture):
+
+```
+lib/
+  app/            # bootstrap: tema Material 3, rutas, dependencias
+  core/           # utilidades compartidas (al mínimo)
+  features/
+    employees/
+      presentation/  # screens, widgets, cubit/estado
+      domain/        # entidad, puerto de repositorio, casos de uso, validadores (Dart puro)
+      data/          # implementaciones de repositorio, modelos, mocks en memoria
+```
+
+## Flujo de Trabajo y Criterios de Terminado (DoD)
+
+- Cada fase termina en un commit descriptivo (`feat: domain`, `feat: data layer`,
+  `feat: UI`, ...).
+- "Fase terminada" = `flutter analyze` sin issues + tests del data layer en verde
+  + la app compila y corre.
+- No se cierra código sin su prueba ni con TODOs de funcionalidad pendientes.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+- Esta constitución prevalece sobre cualquier otra práctica del repositorio.
+- Enmiendas: documentar el cambio, justificar el bump semver y actualizar
+  `Last Amended`. MAJOR: rompe/redefine principios; MINOR: añade principios o
+  secciones; PATCH: aclaraciones de redacción.
+- Cumplimiento: cada fase se revisa (vía `/speckit.analyze`) contra estos
+  principios antes de cerrarse.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-09-10 | **Last Amended**: 2026-09-10
