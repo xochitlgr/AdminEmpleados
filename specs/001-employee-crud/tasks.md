@@ -96,8 +96,8 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 ### Implementation for User Story 3
 
-- [ ] T022 [US3] Agregar `FloatingActionButton` "Agregar" (abre `/form`) a `EmployeeListPage` y crear `App` (MaterialApp con tema de T002 y las rutas de `lib/app/routes.dart` definidas en T016/T021) en `lib/app/app.dart`
-- [ ] T023 [US3] Reescribir `lib/main.dart` (init de `get_it` con `injector` + `runApp(App)`) y reemplazar el test de plantilla `test/widget_test.dart` (hace referencia al counter de la plantilla y rompería `flutter test`) por un smoke test que verifica que la app arranca y muestra la lista
+- [X] T022 [US3] Agregar `FloatingActionButton` "Agregar" (abre `/form`) a `EmployeeListPage` y crear `App` (MaterialApp con tema de T002 y las rutas de `lib/app/routes.dart` definidas en T016/T021) en `lib/app/app.dart`
+- [X] T023 [US3] Reescribir `lib/main.dart` (init de `get_it` con `injector` + `runApp(App)`) y reemplazar el test de plantilla `test/widget_test.dart` (hace referencia al counter de la plantilla y rompería `flutter test`) por un smoke test que verifica que la app arranca y muestra la lista
 
 **Checkpoint**: All user stories are functional; la app compila y corre.
 
@@ -197,6 +197,7 @@ Con varios desarrolladores:
 - Constitución VIII: un commit por fase (`feat: domain`, `feat: data layer`, `feat: UI`, ...); cada fase deja la app compilable y `flutter analyze` sin issues + tests del data layer en verde
 - Evitar: tareas vagas, conflictos de mismo archivo, dependencias cruzadas que rompan la independencia de stories
 - US3 toca `EmployeeListPage` (compartido con US2): ejecutar en orden (US2 antes de US3)
+
 
 
 

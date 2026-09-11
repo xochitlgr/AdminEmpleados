@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../app/di/injector.dart';
+import '../../../../app/routes.dart';
 import '../cubits/employee_list/employee_list_cubit.dart';
 import '../cubits/employee_list/employee_list_state.dart';
 import '../widgets/employee_card.dart';
@@ -37,6 +38,10 @@ class _ListBodyState extends State<_ListBody> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Empleados')),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => Navigator.of(context).pushNamed(AppRoutes.form),
+        child: const Icon(Icons.add),
+      ),
       body: BlocBuilder<EmployeeListCubit, EmployeeListState>(
         builder: (context, state) {
           switch (state) {
