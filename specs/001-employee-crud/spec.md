@@ -108,7 +108,7 @@ comprobando que se abre el formulario de registro.
 - **FR-002**: Cada fila DEBE incluir un Switch que permita activar/desactivar al
   empleado y DEBE persistir ese cambio en el origen de datos local.
 - **FR-003**: Cuando un empleado está Inactivo, su fila DEBE distinguirse
-  visualmente (color de fondo, opacidad y/o estilo de texto).
+  visualmente (fondo grisáceo y opacidad reducida).
 - **FR-004**: La lista DEBE tener un botón flotante para agregar un nuevo empleado
   que abra el formulario de registro.
 - **FR-005**: El formulario DEBE capturar: nombre completo (texto obligatorio),

@@ -46,7 +46,7 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 - [ ] T008 [P] Crear `MockEmployeeDataSource` con lista en memoria precargada de 5 empleados (cobertura de áreas/géneros, al menos 1 inactivo), `id: int` autoincremental, métodos get/register/toggle en `lib/features/employees/data/datasources/mock_employee_data_source.dart`
 - [ ] T009 [P] Crear `EmployeeModel extends Employee` con `copyWith` y `==`/`hashCode` por valor en `lib/features/employees/data/models/employee_model.dart`
 - [ ] T010 Crear `EmployeeRepositoryImpl` implementando el puerto, mapeando `EmployeeModel` ↔ `Employee` (el domain nunca ve el modelo) y lanzando `StateError('Employee not found: <id>')` si se toggle un `id` inexistente en `lib/features/employees/data/repositories/employee_repository_impl.dart`
-- [ ] T011 Registrar en `get_it` (registro manual, sin código generado): `MockEmployeeDataSource` (LazySingleton), `EmployeeRepository`/`EmployeeRepositoryImpl` (Singleton) y los 3 use cases (LazySingleton) en `lib/app/di/injector.dart`
+- [ ] T011 Registrar en `get_it` (registro manual, sin código generado): `MockEmployeeDataSource` (LazySingleton), `EmployeeRepository`/`EmployeeRepositoryImpl` (Singleton), los 3 use cases (LazySingleton) y preparar el patrón `getIt.registerFactory` para los cubits de presentación en `lib/app/di/injector.dart` (`EmployeeFormCubit` y `EmployeeListCubit` se registran como Factory en T015 y T019, cuando existan sus archivos)
 - [ ] T012 [P] Escribir tests del data source (seed de 5, register asigna `id` y `isActive = true`, toggle invierte estado, error ante id inexistente) en `test/features/employees/data/mock_employee_data_source_test.dart`
 - [ ] T013 [P] Escribir tests del repositorio (getEmployees devuelve 5, register persiste y devuelve el empleado, toggle persiste en el mock, propaga errores) en `test/features/employees/data/employee_repository_impl_test.dart`
 
@@ -58,13 +58,13 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 **Goal**: Formulario de registro validado que crea un empleado (siempre `isActive = true`) y navega a la pantalla de éxito.
 
-**Independent Test**: tests del data layer en verde (`flutter test`); `flutter analyze` sin issues; el formulario bloquea campos requeridos vacíos sin crear ningún empleado; la pantalla de éxito muestra "Empleado registrado correctamente". (Navegación completa verificable tras el wiring de US3.)
+**Independent Test**: tests del data layer en verde (`flutter test`); `flutter analyze` sin issues; el formulario bloquea campos requeridos vacíos sin crear ningún empleado; la pantalla de éxito muestra "Empleado registrado correctamente". (Rutas base `/`, `/form`, `/success` definidas en T016; el runtime completo se verifica en US3.)
 
 ### Implementation for User Story 1
 
 - [ ] T014 [P] [US1] Crear `EmployeeFormState` con `equatable` (initial, submitting, success, error con mensaje) en `lib/features/employees/presentation/cubits/employee_form/employee_form_state.dart`
-- [ ] T015 [P] [US1] Crear `EmployeeFormCubit` con `submit(Employee employee)` (usa `RegisterEmployee`, expone estados) en `lib/features/employees/presentation/cubits/employee_form/employee_form_cubit.dart`
-- [ ] T016 [US1] Crear `EmployeeFormPage` con `Form` + `GlobalKey<FormState>` y validaciones (reglas verbatim de data-model: nombreCompleto "Requerido, no vacío tras trim; error `Ingresa el nombre completo`"; area "Debe seleccionarse un área válida de la lista cerrada"; fechaEntrada "Obligatoria, elegida con DatePicker; no editable manualmente"; puesto "Requerido, no vacío tras trim"; genero "Debe seleccionarse uno de los 3 valores"; fechaNacimiento opcional). Fechas como campos solo-lectura que abren `showDatePicker`; dropdowns `DropdownButtonFormField<Area>` / `<Genero>`; botón "Registrar" que valida y navega a `/success` en `lib/features/employees/presentation/pages/employee_form_page.dart`
+- [ ] T015 [P] [US1] Crear `EmployeeFormCubit` con `submit(Employee employee)` (usa `RegisterEmployee`, expone estados) en `lib/features/employees/presentation/cubits/employee_form/employee_form_cubit.dart` y registrarlo como `Factory` en `lib/app/di/injector.dart`
+- [ ] T016 [US1] Crear `EmployeeFormPage` con `Form` + `GlobalKey<FormState>` y validaciones (reglas verbatim de data-model: nombreCompleto "Requerido, no vacío tras trim; error `Ingresa el nombre completo`"; area "Debe seleccionarse un área válida de la lista cerrada"; fechaEntrada "Obligatoria, elegida con DatePicker; no editable manualmente"; puesto "Requerido, no vacío tras trim"; genero "Debe seleccionarse uno de los 3 valores"; fechaNacimiento opcional). Fechas como campos solo-lectura que abren `showDatePicker`; dropdowns `DropdownButtonFormField<Area>` / `<Genero>`; botón "Registrar" que valida y navega a `/success` en `lib/features/employees/presentation/pages/employee_form_page.dart`; además, crear `lib/app/routes.dart` con las rutas base nombradas `/`, `/form` y `/success` (constantes de ruta + builders para `/form` → `EmployeeFormPage` y `/success` → `EmployeeSuccessPage`; el builder de `/` se completa en T021 al existir `EmployeeListPage`)
 - [ ] T017 [P] [US1] Crear `EmployeeSuccessPage` con mensaje "Empleado registrado correctamente" y botón "Regresar a empleados" en `lib/features/employees/presentation/pages/employee_success_page.dart`
 
 **Checkpoint**: At this point, User Story 1 should be fully functional and testable independently.
@@ -80,9 +80,9 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 ### Implementation for User Story 2
 
 - [ ] T018 [P] [US2] Crear `EmployeeListState` con `equatable` (initial, loading, loaded con lista, error con mensaje) en `lib/features/employees/presentation/cubits/employee_list/employee_list_state.dart`
-- [ ] T019 [P] [US2] Crear `EmployeeListCubit` con `load()` (usa `GetEmployees`) y `toggle(int id)` (usa `ToggleEmployeeStatus` y refresca la lista) en `lib/features/employees/presentation/cubits/employee_list/employee_list_cubit.dart`
+- [ ] T019 [P] [US2] Crear `EmployeeListCubit` con `load()` (usa `GetEmployees`) y `toggle(int id)` (usa `ToggleEmployeeStatus` y refresca la lista) en `lib/features/employees/presentation/cubits/employee_list/employee_list_cubit.dart` y registrarlo como `Factory` en `lib/app/di/injector.dart`
 - [ ] T020 [P] [US2] Crear `EmployeeCard` con nombre completo, puesto, área (etiqueta en español), género, fecha de entrada (`dd/MM/yyyy` con intl), Switch cuyo `value` usa `employee.isActive` (estado guardado; onChanged → `onToggle`) y chip de estado; la fila inactiva se distingue visualmente (fondo grisáceo, opacidad reducida) en `lib/features/employees/presentation/widgets/employee_card.dart`
-- [ ] T021 [US2] Crear `EmployeeListPage` con `BlocBuilder` sobre `EmployeeListCubit`, estados (loading/loaded/error) y AppBar "Empleados" en `lib/features/employees/presentation/pages/employee_list_page.dart`
+- [ ] T021 [US2] Crear `EmployeeListPage` con `BlocBuilder` sobre `EmployeeListCubit`, estados (loading/loaded/error) y AppBar "Empleados" en `lib/features/employees/presentation/pages/employee_list_page.dart`, y completar en `lib/app/routes.dart` el builder de la ruta base `/` → `EmployeeListPage` (definida en T016)
 
 **Checkpoint**: At this point, User Stories 1 AND 2 should both work independently.
 
@@ -96,7 +96,7 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 ### Implementation for User Story 3
 
-- [ ] T022 [US3] Agregar `FloatingActionButton` "Agregar" (abre `/form`) a `EmployeeListPage`, definir rutas nombradas `/`, `/form`, `/success` en `lib/app/routes.dart` y crear `App` (MaterialApp con tema de T002 y rutas) en `lib/app/app.dart`
+- [ ] T022 [US3] Agregar `FloatingActionButton` "Agregar" (abre `/form`) a `EmployeeListPage` y crear `App` (MaterialApp con tema de T002 y las rutas de `lib/app/routes.dart` definidas en T016/T021) en `lib/app/app.dart`
 - [ ] T023 [US3] Reescribir `lib/main.dart` (init de `get_it` con `injector` + `runApp(App)`) y reemplazar el test de plantilla `test/widget_test.dart` (hace referencia al counter de la plantilla y rompería `flutter test`) por un smoke test que verifica que la app arranca y muestra la lista
 
 **Checkpoint**: All user stories are functional; la app compila y corre.
@@ -125,7 +125,7 @@ en verde); se incluyen solo esos. Los tests de domain/usecases y UI son opcional
 
 - **User Story 1 (P1)**: Can start after Foundational - No dependencies on other stories
 - **User Story 2 (P1)**: Can start after Foundational - No dependencies on other stories
-- **User Story 3 (P2)**: Depends on US1 (rutas `/form`, `/success`) y US2 (existencia de `EmployeeListPage` para el FAB)
+- **User Story 3 (P2)**: Depends on US1 (rutas base `/form`, `/success` en `routes.dart`) y US2 (existencia de `EmployeeListPage` y ruta `/` para el FAB)
 
 ### Within Each User Story
 
@@ -174,7 +174,7 @@ Task: "Create EmployeeCard in lib/features/employees/presentation/widgets/employ
 1. Complete Setup + Foundational → Foundation ready (domain + data + DI, testeado)
 2. Add User Story 1 (registro validado + éxito) → Test independently
 3. Add User Story 2 (lista + toggle) → Test independently
-4. Add User Story 3 (FAB + rutas + bootstrap) → App completa, demoable
+4. Add User Story 3 (FAB + App/main bootstrap) → App completa, demoable
 5. Add Polish (validación quickstart S1–S6) → Cierre de feature
 
 ### Parallel Team Strategy

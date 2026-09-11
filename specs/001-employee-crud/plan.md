@@ -57,7 +57,7 @@ fechas solo con `showDatePicker`
 | II. Cubit únicamente (flutter_bloc) | PASA | Solo Cubit + equatable; sin setState para estado de negocio |
 | III. Datos mock en memoria | PASA | Data source in-memory + repositorio in-memory; sin API/BD |
 | IV. Dominio en Dart puro | PASA | Entidad/use cases/puertos sin imports Flutter |
-| V. Validación de formularios | PASA | Form + validators en todos los campos requeridos; nada se persiste sin validar |
+| V. Validación de formularios | PASA | Form + validators en presentación (decisión documentada en research.md, Constitución V); nada se persiste sin validar |
 | VI. UX (Material 3, español, DatePicker) | PASA | `useMaterial3: true`, etiquetas y mensajes en español, fechas vía `showDatePicker` |
 | VII. Calidad | PASA | `flutter analyze` sin issues + tests unitarios del data layer en verde |
 | VIII. Producto terminado por fases | PASA | Un commit por fase; cada fase deja la app compilable y funcional |

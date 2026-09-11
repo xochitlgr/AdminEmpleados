@@ -93,6 +93,20 @@ documentando la decisión, su racionalidad y las alternativas evaluadas.
 - **Alternatives considered**: Síncrono puro — descartado: endurecería el contrato
   del puerto y restaría portabilidad.
 
+## Validación de formularios
+
+- **Decision**: La validación se implementa en la capa de `presentation`
+  mediante `Form` + validators de Flutter (reglas de `data-model.md` citadas
+  verbatim en la tarea T016).
+- **Rationale**: Constitución V sanciona explícitamente "Form + validators". Las
+  reglas de datos son de entrada de UI (campos del formulario), no reglas de
+  negocio; mantener el dominio Dart puro sin lógica atada a widgets evita
+  duplicación. El use case `RegisterEmployee` no re-valida por construcción:
+  el formulario solo emite `Employee` completo.
+- **Alternatives considered**: Validador de dominio puro (`domain/validators`)
+  — descartado: duplicaría lógica usada únicamente por el formulario; se
+  reconsiderará si aparecen reglas de negocio compartidas fuera de la UI.
+
 ## Testeo
 
 - **Decision**: `flutter_test` — tests unitarios obligatorios del data layer
